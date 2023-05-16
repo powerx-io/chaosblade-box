@@ -31,7 +31,11 @@ public class ChaosWebMvcConfigurationSupport extends WebMvcConfigurationSupport 
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
         registry.addResourceHandler("/index.bundle.js", "*.js", "*.css", "*.html", "*.ico", "*.png", "*.jpg", "*.gif", "*.svg")
-            .addResourceLocations("classpath:/build/");
+                .addResourceLocations("classpath:/build/");
+        registry.
+                addResourceHandler("/swagger-ui/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
+                .resourceChain(false);
     }
 
 //    @Override
@@ -62,9 +66,9 @@ public class ChaosWebMvcConfigurationSupport extends WebMvcConfigurationSupport 
         List<HttpMessageConverter<?>> httpMessageConverters = new ArrayList<>();
         for (HttpMessageConverter<?> converter : converters) {
             if (converter.getSupportedMediaTypes().stream().anyMatch(
-                MediaType.APPLICATION_JSON::equals)) {
+                    MediaType.APPLICATION_JSON::equals)) {
                 log.info("exclude HttpMessageConverter:{},support:{},use fastjson", converter.getClass().getName(),
-                    MediaType.APPLICATION_JSON_VALUE);
+                        MediaType.APPLICATION_JSON_VALUE);
             } else {
                 httpMessageConverters.add(converter);
             }

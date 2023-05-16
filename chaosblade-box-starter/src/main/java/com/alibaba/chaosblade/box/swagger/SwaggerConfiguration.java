@@ -19,7 +19,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 @EnableOpenApi
 @EnableWebMvc
-public class SwaggerConfiguration implements WebMvcConfigurer {
+public class SwaggerConfiguration {
 
     @Bean
     public Docket createRestApi() {
@@ -29,21 +29,6 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .paths(PathSelectors.any())
                 .build();
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /** swagger配置 */
-        registry.addResourceHandler("/swagger/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
-
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        System.err.println("====yyds====");
-        registry.addViewController("/swagger/")
-                .setViewName("forward:/swagger/index.html");
     }
 
 }

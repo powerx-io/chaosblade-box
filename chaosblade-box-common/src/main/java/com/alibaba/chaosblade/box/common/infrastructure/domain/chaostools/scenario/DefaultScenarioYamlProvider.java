@@ -82,7 +82,7 @@ public class DefaultScenarioYamlProvider implements ScenarioYamlProvider, Initia
             Representer representer = new Representer();
             representer.setPropertyUtils(new PropertyUtils() {
                 @Override
-                public Property getProperty(Class<? extends Object> type, String name) throws IntrospectionException {
+                public Property getProperty(Class<? extends Object> type, String name) {
                     if (name.indexOf('-') > -1) {
                         name = name.replace('-', '_');
                     }

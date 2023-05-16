@@ -3,7 +3,6 @@ package com.alibaba.chaosblade.box.common.infrastructure.util;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
@@ -68,7 +67,7 @@ public final class ResourceUtils {
                 if (resource.exists()) {
                     resources.add(resource);
                 } else if (validate) {
-                    throw new ResourceNotFoundException(propertyName, resource);
+                    throw new RuntimeException("resource not found "+propertyName);
                 }
             }
         }

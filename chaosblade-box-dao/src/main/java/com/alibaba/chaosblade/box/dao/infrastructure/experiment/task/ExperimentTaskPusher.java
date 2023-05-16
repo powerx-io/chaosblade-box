@@ -4,10 +4,11 @@ import com.alibaba.chaosblade.box.common.app.sdk.constants.PhaseType;
 import com.alibaba.chaosblade.box.common.commands.CommandBus;
 import com.alibaba.chaosblade.box.common.common.domain.user.ChaosUser;
 import com.alibaba.chaosblade.box.common.common.enums.ResultEnum;
-import com.alibaba.chaosblade.box.dao.infrastructure.experiment.interceptor.ExperimentTaskPushInterceptor;
 import com.alibaba.chaosblade.box.common.experiment.task.flow.step.activity.ActivityExecuteResult;
+import com.alibaba.chaosblade.box.common.infrastructure.util.SpringUtils;
 import com.alibaba.chaosblade.box.dao.command.task.ActivityTaskExecutionCommand;
 import com.alibaba.chaosblade.box.dao.command.task.ExperimentTaskFinishedCommand;
+import com.alibaba.chaosblade.box.dao.infrastructure.experiment.interceptor.ExperimentTaskPushInterceptor;
 import com.alibaba.chaosblade.box.dao.infrastructure.experiment.task.flow.ExperimentTaskRunnableSettings;
 import com.alibaba.chaosblade.box.dao.infrastructure.experiment.task.flow.activity.ExperimentExecuteContext;
 import com.alibaba.chaosblade.box.dao.model.ActivityTaskDO;
@@ -48,9 +49,6 @@ public class ExperimentTaskPusher {
 
     @Autowired
     private List<ExperimentTaskPushInterceptor> experimentTaskPushInterceptors;
-
-    @Autowired
-    private ActivityTaskExecutionFinishedProcessor activityTaskExecutionFinishedProcessor;
 
     public void push(ActivityTaskDO activityTaskDO, ExperimentTaskDO experimentTaskDO,
                      ExperimentTaskRunnableSettings taskRunnableSettings) {
@@ -157,8 +155,10 @@ public class ExperimentTaskPusher {
                     activityTaskDO.getExperimentTaskId()).orElse(null);
                 hashMapSettings.setUser(new ChaosUser(experimentTaskDO.getUserId()));
                 hashMapSettings.setExperimentTaskDO(experimentTaskDO);
-                activityTaskExecutionFinishedProcessor.afterFinished(activityTaskDO, activityExecuteResult,
-                    hashMapSettings);
+//                activityTaskExecutionFinishedProcessor.afterFinished(activityTaskDO, activityExecuteResult,
+//                    hashMapSettings);
+                ActivityTaskExecutionFinishedProcessor processor = SpringUtils.getApplicationContext().getBean(ActivityTaskExecutionFinishedProcessor.class);
+                processor.afterFinished(activityTaskDO, activityExecuteResult,hashMapSettings);
             }
         } catch (Throwable throwable) {
             log.info("Push experiment task failed,current activity taskId:{}", activityTaskId, throwable);

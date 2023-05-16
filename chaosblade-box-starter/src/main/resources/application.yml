@@ -21,7 +21,7 @@ chaos:
   env: daily
   function:
     sync:
-      type: ALL
+      type: None
   server:
     domain: ''
   sync:
@@ -64,8 +64,12 @@ logging:
   level:
     root: info
     org.springframework: info
-    com.alibaba.chaosblade.box: debug
-
+    com.alibaba.chaosblade.box: info
+springfox:
+  documentation:
+    enabled: true
+    swagger-ui:
+      enabled: true
 spring:
   aop:
     proxy-target-class: true
@@ -76,13 +80,14 @@ spring:
     continue-on-error: true
     data: classpath:sql/data/*.sql
     driver-class-name: com.mysql.jdbc.Driver
-    initialization-mode: always
+    initialization-mode: none
     initialize: true
-    password: 123456
     schema: classpath:sql/schema/chaosblade-box-ddl.sql
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://10.10.222.103:3306/chaosblade?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.2.101:3306/chaosblade?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
+    password: root123Q!@
+
   mcms:
     enabled: false
   mvc:

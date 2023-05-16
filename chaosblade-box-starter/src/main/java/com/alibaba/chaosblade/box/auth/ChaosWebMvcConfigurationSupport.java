@@ -34,12 +34,12 @@ public class ChaosWebMvcConfigurationSupport extends WebMvcConfigurationSupport 
             .addResourceLocations("classpath:/build/");
     }
 
-    @Override
-    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-        RequestMappingHandlerMapping requestMappingHandlerMapping = super.requestMappingHandlerMapping();
-        requestMappingHandlerMapping.setOrder(Ordered.LOWEST_PRECEDENCE);
-        return requestMappingHandlerMapping;
-    }
+//    @Override
+//    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+//        RequestMappingHandlerMapping requestMappingHandlerMapping = super.requestMappingHandlerMapping();
+//        requestMappingHandlerMapping.setOrder(Ordered.LOWEST_PRECEDENCE);
+//        return requestMappingHandlerMapping;
+//    }
 
     @Override
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
